@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 
@@ -27,8 +28,12 @@ public class UserDao {
         // Select * from user where user.id = <user_id> and role.id = <role_id>
         // As query parameters /user?id=123&roleId=100
         // Save it in a String parameter
-        return entityManager.createNamedQuery("userByUuid", UserEntity.class)
-                .setParameter("uuid", userUuid)
-                .getSingleResult();
+        try{
+            return entityManager.createNamedQuery("userByUuid", UserEntity.class)
+                    .setParameter("uuid", userUuid)
+                    .getSingleResult();
+        } catch(NoResultException nre){
+            return null;
+        }
     }
 }
