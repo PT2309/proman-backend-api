@@ -3,6 +3,7 @@ package com.upgrad.proman.api.exception;
 import com.upgrad.proman.api.model.ErrorResponse;
 import com.upgrad.proman.service.exception.AuthenticationFailedException;
 import com.upgrad.proman.service.exception.ResourceNotFoundException;
+import com.upgrad.proman.service.exception.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,5 +26,13 @@ public class RestExceptionHandler {
                 .code(exception.getCode())
                 .message(exception.getErrorMessage()),
         HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorResponse> unauthorizedException(UnauthorizedException exception, WebRequest web){
+        return new ResponseEntity<ErrorResponse>(new ErrorResponse()
+                .code(exception.getCode())
+                .message(exception.getErrorMessage()),
+                HttpStatus.UNAUTHORIZED);
     }
 }

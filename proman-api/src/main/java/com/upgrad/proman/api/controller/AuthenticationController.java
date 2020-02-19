@@ -28,9 +28,9 @@ public class AuthenticationController {
     @RequestMapping(method= RequestMethod.POST, path="/auth/login", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AuthorizedUserResponse> login(@RequestHeader("authorization") final String authorization) throws AuthenticationFailedException {
 
-        // Authorization - Basic and Bearer
-        // Basic Authorization - Request Header -
-        // authorization = Basic YWJoaTpwYXNz29yZA==
+        // Authentication - Basic and Bearer(Request Header with the generated access-token)
+        // Basic Authentication - Request Header -
+        // Authentication = Basic YWJoaTpwYXNz29yZA==
         // (Base64 encoding) username:password
 
         byte[] decode = Base64.getDecoder().decode(authorization.split("Basic")[0]);
